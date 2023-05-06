@@ -1,35 +1,27 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { createContext, useContext, useState } from 'react';
+import './App.css';
+import Info from './components/Info';
+import Plan from './components/Plan';
+import AddOn from './components/AddOn';
+import Summary from './components/Summary';
+import { useStepContext } from './hooks/useStepContext';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { step, setStep } = useStepContext();
+  function renderPage(step: number | null) {
+    switch (step) {
+      case 0:
+        return <Info />;
+      case 1:
+        return <Plan />;
+      case 2:
+        return <AddOn />;
+      case 3:
+        return <Summary />;
+    }
+  }
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+  return <>{renderPage(step)}</>;
 }
 
-export default App
+export default App;
